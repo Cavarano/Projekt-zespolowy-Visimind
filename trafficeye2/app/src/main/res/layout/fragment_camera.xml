@@ -13,14 +13,12 @@
     <!-- Godzina -->
 
     <!-- Zdjęcie znaku -->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="453dp"
-        android:layout_marginBottom="24dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
+    <androidx.camera.view.PreviewView
+        android:id="@+id/camera_preview"
+        android:layout_width="411dp"
+        android:layout_height="446dp"
+        android:baselineAligned="false"
+        android:scaleType="fitCenter" />
 
     <!-- Rozwijana lista z kodem i opisem -->
     <androidx.cardview.widget.CardView
@@ -28,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="48dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp">
@@ -35,34 +34,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
                     android:text="E3"
                     android:textColor="#212121"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginRight="16dp"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="Rectangular sign with arrow"
                     android:textColor="#424242"
-                    android:textSize="16sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"/>
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- Pełny opis (widoczny po rozwinięciu) -->
@@ -70,11 +69,11 @@
                 android:id="@+id/fullDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="8dp"
                 android:text="Description: A rectangular sign with an arrow pointing in one direction, indicating that traffic should only move in that direction."
-                android:textSize="14sp"
                 android:textColor="#616161"
-                android:visibility="gone"
-                android:paddingTop="8dp"/>
+                android:textSize="14sp"
+                android:visibility="gone" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -84,7 +83,8 @@
         android:id="@+id/returnButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Return to Main"
         android:backgroundTint="#FFFFFF"
+        android:baselineAligned="false"
+        android:text="Return to Main"
         android:textColor="#000000" />
 </LinearLayout>
