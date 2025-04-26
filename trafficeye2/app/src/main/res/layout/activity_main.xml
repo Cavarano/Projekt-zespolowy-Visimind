@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2149C1">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TrafficEye"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp" />
+
+    <!-- Get Started Button -->
+    <Button
+        android:id="@+id/getStartedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get started"
+        android:layout_below="@id/titleText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#000000" />
+
+    <!-- Upload Button (hidden at start) -->
+    <Button
+        android:id="@+id/uploadButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#000000" />
+
+    <!-- Camera On Button (hidden at start) -->
+    <Button
+        android:id="@+id/cameraOnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Camera on"
+        android:layout_below="@id/uploadButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#000000" />
+
+    <!-- Description Text -->
+    <TextView
+        android:id="@+id/descriptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DriveSafe helps drivers detect and understand\nroad signs instantly using AI-powered recognition."
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:name="com.example.trafficeye2.CameraFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

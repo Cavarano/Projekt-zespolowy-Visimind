@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2149C1"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingTop="48dp"
+    android:paddingBottom="48dp">
+
+    <!-- Nagłówek strony -->
+
+    <!-- Godzina -->
+
+    <!-- Zdjęcie znaku -->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="381dp"
+        android:layout_marginBottom="24dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <!-- Rozwijana lista z kodem i opisem -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="48dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="E3"
+                    android:textColor="#212121"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="16dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Rectangular sign with arrow"
+                    android:textColor="#424242"
+                    android:textSize="16sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+
+            <!-- Pełny opis (widoczny po rozwinięciu) -->
+            <TextView
+                android:id="@+id/fullDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description: A rectangular sign with an arrow pointing in one direction, indicating that traffic should only move in that direction."
+                android:textSize="14sp"
+                android:textColor="#616161"
+                android:visibility="gone"
+                android:paddingTop="8dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Przyciski -->
+    <Button
+        android:layout_width="280dp"
+        android:layout_height="48dp"
+        android:text="Next sign"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#000000"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Return to Main"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#000000" />
+</LinearLayout>
