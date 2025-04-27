@@ -49,10 +49,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFragment(fragment: Fragment) {
-        fragmentContainer.visibility = View.VISIBLE // make fragment visible
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+        fragmentContainer.visibility = View.VISIBLE // make fragment visible
+        // Hide the option buttons
+        uploadButton.visibility = View.GONE
+        cameraOnButton.visibility = View.GONE
     }
 
     fun returnToMainMenu() {
