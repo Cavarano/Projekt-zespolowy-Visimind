@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trafficeye2.R
+import android.animation.ObjectAnimator
+import android.view.animation.AccelerateDecelerateInterpolator
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,22 +24,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         getStartedButton = findViewById(R.id.getStartedButton)
         uploadButton = findViewById(R.id.uploadButton)
         cameraOnButton = findViewById(R.id.cameraOnButton)
         titleText = findViewById(R.id.titleText)
         fragmentContainer = findViewById(R.id.fragment_container)
-
+        animateTitleEntrance()
         // Hide fragment container at the start
         fragmentContainer.visibility = View.GONE
 
         getStartedButton.setOnClickListener {
-            getStartedButton.visibility = View.GONE
-            titleText.visibility = View.GONE
+            getStartedButton.animate()
+                .alpha(0f)
+                .setDuration(500)
+                .withEndAction {
+                    getStartedButton.visibility = View.GONE
+                }
+                .start()
+
+            titleText.animate()
+                .alpha(0f)
+                .setDuration(500)
+                .withEndAction {
+                    titleText.visibility = View.GONE
+                }
+                .start()
 
             uploadButton.visibility = View.VISIBLE
             cameraOnButton.visibility = View.VISIBLE
         }
+
 
         uploadButton.setOnClickListener {
             showFragment(UploadFragment())
@@ -52,20 +69,44 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
-        fragmentContainer.visibility = View.VISIBLE // make fragment visible
-        // Hide the option buttons
+
+        // Ensure fragmentContainer is visible before animation
+        fragmentContainer.visibility = View.VISIBLE
+
+        // Start off-screen at bottom
+        fragmentContainer.post {
+            fragmentContainer.translationY = fragmentContainer.height.toFloat()
+            fragmentContainer.animate()
+                .translationY(0f)
+                .setDuration(300)
+                .start()
+        }
+
+
         uploadButton.visibility = View.GONE
         cameraOnButton.visibility = View.GONE
+
     }
+
 
     fun returnToMainMenu() {
-        // Hide the fragment container
-        fragmentContainer.visibility = View.GONE
-
-        // Show the option buttons again
-        uploadButton.visibility = View.VISIBLE
-        cameraOnButton.visibility = View.VISIBLE
+        fragmentContainer.animate()
+            .translationY(fragmentContainer.height.toFloat()) // Slide down out
+            .setDuration(300)
+            .withEndAction {
+                fragmentContainer.visibility = View.GONE
+                uploadButton.visibility = View.VISIBLE
+                cameraOnButton.visibility = View.VISIBLE
+            }
+            .start()
     }
 
 
+    private fun animateTitleEntrance() {
+        titleText.translationY = -500f // Start above the screen
+        val animator = ObjectAnimator.ofFloat(titleText, "translationY", 0f)
+        animator.duration = 1000 // 1 second
+        animator.interpolator = AccelerateDecelerateInterpolator()
+        animator.start()
+    }
 }
