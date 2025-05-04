@@ -9,6 +9,18 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.trafficeye2.models.RoadSign
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.example.trafficeye2.adapters.SignAdapter
+import android.graphics.BitmapFactory
+import com.example.trafficeye2.models.Box
+import com.example.trafficeye2.models.SignWithBoxes
+import java.net.URL
 
 class UploadFragment : Fragment() {
 
@@ -20,9 +32,28 @@ class UploadFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_upload, container, false)
 
+        val signsJson = arguments?.getString("signs") ?: "[]"
+        val gson = Gson()
+        val type = object : TypeToken<List<RoadSign>>() {}.type
+        val signs: List<RoadSign> = gson.fromJson(signsJson, type)
+
+        val boxesJson = arguments?.getString("boxes") ?: "[]"
+        val gson_box = Gson()
+        val type_box = object : TypeToken<List<Box>>() {}.type
+        val boxes: List<Box> = gson_box.fromJson(boxesJson, type_box)
+
         val cardView = view.findViewById<CardView>(R.id.cardView)
         val fullDescription = view.findViewById<TextView>(R.id.fullDescription)
-        val returnButton = view.findViewById<Button>(R.id.returnButton) // Add this
+        val returnButton = view.findViewById<Button>(R.id.returnButton)
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.signsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val groupedSigns = groupBoxesBySign(signs, boxes)
+        recyclerView.adapter = SignAdapter(groupedSigns)
+//        recyclerView.adapter = SignAdapter(signs, boxes)
+
+        val totalBoxes = arguments?.getInt("total_boxes") ?: 0
+        val imageView = view.findViewById<ImageView>(R.id.imageView2)
 
         cardView.setOnClickListener {
             if (fullDescription.visibility == View.VISIBLE) {
@@ -32,10 +63,38 @@ class UploadFragment : Fragment() {
             }
         }
 
+        val imagePath = arguments?.getString("uploaded_image")
+        if (!imagePath.isNullOrEmpty()) {
+            val bitmap = BitmapFactory.decodeFile(imagePath)
+            imageView.setImageBitmap(bitmap)
+        } else {
+            val imageUrl = arguments?.getString("image_url") ?: ""
+            if (imageUrl.isNotEmpty()) {
+                Thread {
+                    try {
+                        val input = URL(imageUrl).openStream()
+                        val drawable = Drawable.createFromStream(input, "src")
+                        activity?.runOnUiThread {
+                            imageView.setImageDrawable(drawable)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }.start()
+            }
+        }
+
         returnButton.setOnClickListener {
             (activity as? MainActivity)?.returnToMainMenu()
         }
 
         return view
+    }
+
+    fun groupBoxesBySign(signs: List<RoadSign>, boxes: List<Box>): List<SignWithBoxes> {
+        return signs.map { sign ->
+            val relatedBoxes = boxes.filter { it.class_id == sign.id }
+            SignWithBoxes(sign, relatedBoxes)
+        }
     }
 }
