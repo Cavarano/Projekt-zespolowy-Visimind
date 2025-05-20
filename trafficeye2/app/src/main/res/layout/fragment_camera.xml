@@ -87,7 +87,7 @@
         android:layout_height="50dp"
         android:backgroundTint="#FFFFFF"
         android:baselineAligned="false"
-        android:text="Return to Main"
+        android:text="Return"
         android:textColor="#000000" />
 
 </LinearLayout>

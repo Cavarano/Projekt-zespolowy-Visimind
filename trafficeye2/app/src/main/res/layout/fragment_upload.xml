@@ -8,13 +8,6 @@
     android:background="#2149C1"
     android:gravity="center_horizontal">
 
-    <!-- Nagłówek strony -->
-
-    <!-- Godzina -->
-
-    <!-- Zdjęcie znaku -->
-
-    <!-- Rozwijana lista z kodem i opisem -->
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView2"
         android:layout_width="0dp"
@@ -58,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
-            android:text="Description: A rectangular sign with an arrow pointing in one direction, indicating that traffic should only move in that direction."
+            android:text="A"
             android:textColor="#616161"
             android:textSize="14sp"
             android:visibility="gone" />
@@ -92,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:backgroundTint="#FFFFFF"
-        android:text="Return to Main"
+        android:text="Return"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

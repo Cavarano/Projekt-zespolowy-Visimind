@@ -13,6 +13,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="30dp"
+            android:background="#00FFFFFF"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/cogwheel"
+            tools:visibility="visible" />
+
         <ImageView
             android:id="@+id/imageViewIcon"
             android:layout_width="195dp"

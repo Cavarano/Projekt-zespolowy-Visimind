@@ -14,6 +14,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.view.animation.DecelerateInterpolator
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import com.example.trafficeye2.models.Box
@@ -35,6 +37,7 @@ import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var imageButton: ImageButton
     private lateinit var imageViewIcon: ImageView
     private lateinit var getStartedButton: Button
     private lateinit var uploadButton: Button
@@ -48,14 +51,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        imageButton   = findViewById(R.id.imageButton)
         imageViewIcon   = findViewById(R.id.imageViewIcon)
         getStartedButton = findViewById(R.id.getStartedButton)
         uploadButton = findViewById(R.id.uploadButton)
         cameraOnButton = findViewById(R.id.cameraOnButton)
         titleText = findViewById(R.id.titleText)
         fragmentContainer = findViewById(R.id.fragment_container)
-        animateImageViewIconEntrance()
-        animateTitleEntrance()
+        animateXEntrance(titleText)
+        animateXEntrance(imageViewIcon)
         // Hide fragment container at the start
         fragmentContainer.visibility = View.GONE
 
@@ -67,9 +71,8 @@ class MainActivity : AppCompatActivity() {
                     getStartedButton.visibility = View.GONE
                 }
                 .start()
-
-            animateTitleSlideUp()
-            animateImageViewIconSlideUp()
+            animateXSlideUp(titleText)
+            animateXSlideUp(imageViewIcon)
 
             /*
             titleText.animate()
@@ -80,11 +83,16 @@ class MainActivity : AppCompatActivity() {
                 }
                 .start()
              */
-
+            imageButton.alpha = 0f
+            imageButton.visibility = View.VISIBLE
             uploadButton.alpha = 0f
             uploadButton.visibility = View.VISIBLE
             cameraOnButton.alpha = 0f
             cameraOnButton.visibility = View.VISIBLE
+            imageButton.animate()
+                .alpha(1f)
+                .setDuration(500)
+                .start()
             uploadButton.animate()
                 .alpha(1f)
                 .setDuration(500)
@@ -108,6 +116,10 @@ class MainActivity : AppCompatActivity() {
 
         cameraOnButton.setOnClickListener {
             showFragment(CameraFragment())
+        }
+
+        imageButton.setOnClickListener {
+            showFragment(SettingsFragment())
         }
     }
 
@@ -148,34 +160,17 @@ class MainActivity : AppCompatActivity() {
             .start()
     }
 
-
-    private fun animateTitleEntrance() {
-        titleText.translationY = -500f // Start above the screen
-        val animator = ObjectAnimator.ofFloat(titleText, "translationY", 0f)
-        animator.duration = 1000 // 1 second
-        animator.interpolator = AccelerateDecelerateInterpolator()
+    private fun animateXEntrance(view: View) {
+        view.translationY = -1000f
+        val animator = ObjectAnimator.ofFloat(view, "translationY", 0f)
+        animator.duration = 1200
+        animator.interpolator = DecelerateInterpolator()
         animator.start()
     }
 
-    private fun animateTitleSlideUp() {
-        titleText.translationY = 0f
-        val animator = ObjectAnimator.ofFloat(titleText, "translationY", -400f)
-        animator.duration = 300
-        animator.interpolator = AccelerateDecelerateInterpolator()
-        animator.start()
-    }
-
-    private fun animateImageViewIconEntrance() {
-        imageViewIcon.translationY = -500f
-        val animator = ObjectAnimator.ofFloat(imageViewIcon, "translationY", 0f)
-        animator.duration = 1000
-        animator.interpolator = AccelerateDecelerateInterpolator()
-        animator.start()
-    }
-
-    private fun animateImageViewIconSlideUp() {
-        imageViewIcon.translationY = 0f
-        val animator = ObjectAnimator.ofFloat(imageViewIcon, "translationY", -400f)
+    private fun animateXSlideUp(view: View) {
+        view.translationY = 0f
+        val animator = ObjectAnimator.ofFloat(view, "translationY", -400f)
         animator.duration = 300
         animator.interpolator = AccelerateDecelerateInterpolator()
         animator.start()
