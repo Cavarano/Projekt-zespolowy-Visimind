@@ -14,6 +14,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.ImageView
 import android.widget.ProgressBar
 import com.example.trafficeye2.models.Box
 import okhttp3.MultipartBody
@@ -34,6 +35,7 @@ import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var imageViewIcon: ImageView
     private lateinit var getStartedButton: Button
     private lateinit var uploadButton: Button
     private lateinit var cameraOnButton: Button
@@ -46,12 +48,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        imageViewIcon   = findViewById(R.id.imageViewIcon)
         getStartedButton = findViewById(R.id.getStartedButton)
         uploadButton = findViewById(R.id.uploadButton)
         cameraOnButton = findViewById(R.id.cameraOnButton)
         titleText = findViewById(R.id.titleText)
         fragmentContainer = findViewById(R.id.fragment_container)
+        animateImageViewIconEntrance()
         animateTitleEntrance()
         // Hide fragment container at the start
         fragmentContainer.visibility = View.GONE
@@ -65,19 +68,35 @@ class MainActivity : AppCompatActivity() {
                 }
                 .start()
 
+            animateTitleSlideUp()
+            animateImageViewIconSlideUp()
+
+            /*
             titleText.animate()
-                .alpha(0f)
+                //.alpha(0f)
                 .setDuration(500)
                 .withEndAction {
-                    titleText.visibility = View.GONE
+                    //titleText.visibility = View.GONE
                 }
                 .start()
+             */
 
+            uploadButton.alpha = 0f
             uploadButton.visibility = View.VISIBLE
+            cameraOnButton.alpha = 0f
             cameraOnButton.visibility = View.VISIBLE
-        }
+            uploadButton.animate()
+                .alpha(1f)
+                .setDuration(500)
+                .start()
+            cameraOnButton.animate()
+                .alpha(1f)
+                .setDuration(500)
+                .start()
 
+        }
         uploadButton.setOnClickListener {
+            showLoadingIndicator()
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
@@ -117,6 +136,7 @@ class MainActivity : AppCompatActivity() {
 
 
     fun returnToMainMenu() {
+        hideLoadingIndicator()
         fragmentContainer.animate()
             .translationY(fragmentContainer.height.toFloat()) // Slide down out
             .setDuration(300)
@@ -136,6 +156,31 @@ class MainActivity : AppCompatActivity() {
         animator.interpolator = AccelerateDecelerateInterpolator()
         animator.start()
     }
+
+    private fun animateTitleSlideUp() {
+        titleText.translationY = 0f
+        val animator = ObjectAnimator.ofFloat(titleText, "translationY", -400f)
+        animator.duration = 300
+        animator.interpolator = AccelerateDecelerateInterpolator()
+        animator.start()
+    }
+
+    private fun animateImageViewIconEntrance() {
+        imageViewIcon.translationY = -500f
+        val animator = ObjectAnimator.ofFloat(imageViewIcon, "translationY", 0f)
+        animator.duration = 1000
+        animator.interpolator = AccelerateDecelerateInterpolator()
+        animator.start()
+    }
+
+    private fun animateImageViewIconSlideUp() {
+        imageViewIcon.translationY = 0f
+        val animator = ObjectAnimator.ofFloat(imageViewIcon, "translationY", -400f)
+        animator.duration = 300
+        animator.interpolator = AccelerateDecelerateInterpolator()
+        animator.start()
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
