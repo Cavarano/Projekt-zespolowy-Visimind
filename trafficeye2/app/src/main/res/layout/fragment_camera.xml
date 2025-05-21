@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2149C1"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingTop="48dp"
-    android:paddingBottom="48dp">
+    android:gravity="center_horizontal">
 
     <!-- Godzina -->
 
@@ -18,65 +16,65 @@
 
     <androidx.camera.view.PreviewView
         android:id="@+id/camera_preview"
-        android:layout_width="411dp"
-        android:layout_height="446dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:baselineAligned="false"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="48dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/returnButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/camera_preview">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E3"
+            android:textColor="#212121"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Rectangular sign with arrow"
+            android:textColor="#424242"
+            android:textSize="16sp"
+            android:visibility="invisible" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:text="E3"
-                    android:textColor="#212121"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Rectangular sign with arrow"
-                    android:textColor="#424242"
-                    android:textSize="16sp" />
-            </LinearLayout>
+        <!-- Pełny opis (widoczny po rozwinięciu) -->
+        <TextView
+            android:id="@+id/fullDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:text="Description: A rectangular sign with an arrow pointing in one direction, indicating that traffic should only move in that direction."
+            android:textColor="#616161"
+            android:textSize="14sp"
+            android:visibility="gone" />
 
-            <!-- Pełny opis (widoczny po rozwinięciu) -->
-            <TextView
-                android:id="@+id/fullDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:text="Description: A rectangular sign with an arrow pointing in one direction, indicating that traffic should only move in that direction."
-                android:textColor="#616161"
-                android:textSize="14sp"
-                android:visibility="gone" />
-        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <!-- Przycisk -->
@@ -84,10 +82,15 @@
     <Button
         android:id="@+id/returnButton"
         android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
         android:backgroundTint="#FFFFFF"
         android:baselineAligned="false"
         android:text="Return"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
