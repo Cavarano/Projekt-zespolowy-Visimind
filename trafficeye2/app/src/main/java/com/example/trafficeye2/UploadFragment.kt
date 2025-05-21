@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.example.trafficeye2.adapters.SignAdapter
 import android.graphics.BitmapFactory
+import android.graphics.Bitmap
 import com.example.trafficeye2.models.Box
 import com.example.trafficeye2.models.SignWithBoxes
 import java.net.URL
@@ -88,6 +89,15 @@ class UploadFragment : Fragment() {
             (activity as? MainActivity)?.returnToMainMenu()
         }
 
+        if (!imagePath.isNullOrEmpty()) {
+            val bitmap = BitmapFactory.decodeFile(imagePath)
+            val bitmapWithBoxes = drawBoxesOnBitmap(bitmap, boxes)
+            imageView.setImageBitmap(bitmapWithBoxes)
+        }
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = SignAdapter(groupBoxesBySign(signs, boxes))
+
         return view
     }
 
@@ -97,4 +107,31 @@ class UploadFragment : Fragment() {
             SignWithBoxes(sign, relatedBoxes)
         }
     }
+
+    fun drawBoxesOnBitmap(
+        original: Bitmap,
+        boxes: List<Box>
+    ): Bitmap {
+        val mutableBitmap = original.copy(Bitmap.Config.ARGB_8888, true)
+        val canvas = android.graphics.Canvas(mutableBitmap)
+
+        val boxPaint = android.graphics.Paint().apply {
+            color = android.graphics.Color.RED
+            strokeWidth = 5f
+            style = android.graphics.Paint.Style.STROKE
+        }
+
+        boxes.forEach { box ->
+            canvas.drawRect(
+                box.x1.toFloat(),
+                box.y1.toFloat(),
+                box.x2.toFloat(),
+                box.y2.toFloat(),
+                boxPaint
+            )
+        }
+
+        return mutableBitmap
+    }
+
 }
