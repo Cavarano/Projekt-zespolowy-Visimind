@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout2"
@@ -8,12 +9,7 @@
     android:background="#2149C1"
     android:gravity="center_horizontal">
 
-    <!-- Godzina -->
-
-    <!-- Zdjęcie znaku -->
-
-    <!-- Rozwijana lista z kodem i opisem -->
-
+    <!-- Podgląd kamery -->
     <androidx.camera.view.PreviewView
         android:id="@+id/camera_preview"
         android:layout_width="0dp"
@@ -22,13 +18,13 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:baselineAligned="false"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Karta z informacjami o znaku -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
@@ -43,28 +39,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/camera_preview">
 
+        <!-- Zdjęcie znaku -->
+        <ImageView
+            android:id="@+id/capturedImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="gone"
+            android:scaleType="centerCrop" />
 
+        <!-- Tekst wykrytego znaku -->
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/detectedSignText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="E3"
-            android:textColor="#212121"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="invisible" />
+            android:text="Waiting for detection..."
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:gravity="center" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Rectangular sign with arrow"
-            android:textColor="#424242"
-            android:textSize="16sp"
-            android:visibility="invisible" />
-
-
-        <!-- Pełny opis (widoczny po rozwinięciu) -->
+        <!-- Pełny opis znaku -->
         <TextView
             android:id="@+id/fullDescription"
             android:layout_width="wrap_content"
@@ -75,17 +71,76 @@
             android:textSize="14sp"
             android:visibility="gone" />
 
+        <!-- Kontenery dla znaków -->
+        <LinearLayout
+            android:id="@+id/signsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/signInfoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <!-- Obraz znaku -->
+            <ImageView
+                android:id="@+id/signImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp" />
+
+            <!-- Informacje o znaku -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="8dp">
+
+                <TextView
+                    android:id="@+id/signName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/signDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#FFFFFF"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/signBoxes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#FFFFFF"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Przycisk -->
-
+    <!-- Przycisk powrotu -->
     <Button
         android:id="@+id/returnButton"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:backgroundTint="#FFFFFF"
-        android:baselineAligned="false"
         android:text="Return"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
