@@ -91,7 +91,7 @@ class UploadFragment : Fragment() {
 
         if (!imagePath.isNullOrEmpty()) {
             val bitmap = BitmapFactory.decodeFile(imagePath)
-            val bitmapWithBoxes = drawBoxesOnBitmap(bitmap, boxes)
+            val bitmapWithBoxes = drawBoxesOnBitmap(bitmap, boxes, signs)
             imageView.setImageBitmap(bitmapWithBoxes)
         }
 
@@ -110,18 +110,53 @@ class UploadFragment : Fragment() {
 
     fun drawBoxesOnBitmap(
         original: Bitmap,
-        boxes: List<Box>
+        boxes: List<Box>,
+        signs: List<RoadSign>
     ): Bitmap {
         val mutableBitmap = original.copy(Bitmap.Config.ARGB_8888, true)
         val canvas = android.graphics.Canvas(mutableBitmap)
 
-        val boxPaint = android.graphics.Paint().apply {
-            color = android.graphics.Color.RED
-            strokeWidth = 5f
-            style = android.graphics.Paint.Style.STROKE
-        }
 
-        boxes.forEach { box ->
+        val colors = listOf(
+            android.graphics.Color.RED,
+            android.graphics.Color.GREEN,
+            android.graphics.Color.BLUE,
+            android.graphics.Color.MAGENTA,
+            android.graphics.Color.CYAN,
+            android.graphics.Color.YELLOW,
+            android.graphics.Color.rgb(255, 165, 0),  // Orange
+            android.graphics.Color.rgb(128, 0, 128), // Purple
+            android.graphics.Color.rgb(0, 128, 128), // Teal
+            android.graphics.Color.rgb(0, 100, 0),   // Dark Green
+            android.graphics.Color.rgb(255, 20, 147),// Deep Pink
+            android.graphics.Color.rgb(70, 130, 180),// Steel Blue
+            android.graphics.Color.rgb(255, 215, 0), // Gold
+            android.graphics.Color.rgb(139, 0, 0),   // Dark Red
+            android.graphics.Color.rgb(85, 107, 47), // Dark Olive Green
+            android.graphics.Color.rgb(199, 21, 133),// Medium Violet Red
+            android.graphics.Color.rgb(25, 25, 112), // Midnight Blue
+            android.graphics.Color.rgb(210, 105, 30),// Chocolate
+            android.graphics.Color.rgb(255, 105, 180),// Hot Pink
+            android.graphics.Color.rgb(30, 144, 255) // Dodger Blue
+        )
+
+        boxes.forEachIndexed { index, box ->
+            val color = colors[index % colors.size]
+
+            val boxPaint = android.graphics.Paint().apply {
+                this.color = color
+                strokeWidth = 5f
+                style = android.graphics.Paint.Style.STROKE
+            }
+
+            val textPaint = android.graphics.Paint().apply {
+                this.color = color
+                textSize = 62f
+                style = android.graphics.Paint.Style.FILL
+                isAntiAlias = true
+                typeface = android.graphics.Typeface.create(android.graphics.Typeface.DEFAULT, android.graphics.Typeface.BOLD)
+            }
+
             canvas.drawRect(
                 box.x1.toFloat(),
                 box.y1.toFloat(),
@@ -129,9 +164,19 @@ class UploadFragment : Fragment() {
                 box.y2.toFloat(),
                 boxPaint
             )
+
+            val label = signs.find { it.id == box.class_id }?.id ?: box.class_id
+
+            val textX = box.x1.toFloat()
+            val textY = (box.y1 - 10).toFloat().coerceAtLeast(textPaint.textSize)
+
+            canvas.drawText(label, textX, textY, textPaint)
         }
 
         return mutableBitmap
     }
+
+
+
 
 }

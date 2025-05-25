@@ -17,7 +17,7 @@
             android:id="@+id/imageButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="45dp"
             android:background="#00FFFFFF"
             android:scaleType="centerInside"
             android:visibility="gone"

@@ -143,6 +143,7 @@ class MainActivity : AppCompatActivity() {
 
         uploadButton.visibility = View.GONE
         cameraOnButton.visibility = View.GONE
+        imageButton.visibility = View.GONE
 
     }
 
@@ -156,6 +157,7 @@ class MainActivity : AppCompatActivity() {
                 fragmentContainer.visibility = View.GONE
                 uploadButton.visibility = View.VISIBLE
                 cameraOnButton.visibility = View.VISIBLE
+                imageButton.visibility = View.VISIBLE
             }
             .start()
     }
