@@ -56,14 +56,6 @@ class UploadFragment : Fragment() {
         val totalBoxes = arguments?.getInt("total_boxes") ?: 0
         val imageView = view.findViewById<ImageView>(R.id.imageView2)
 
-        cardView.setOnClickListener {
-            if (fullDescription.visibility == View.VISIBLE) {
-                fullDescription.visibility = View.GONE
-            } else {
-                fullDescription.visibility = View.VISIBLE
-            }
-        }
-
         val imagePath = arguments?.getString("uploaded_image")
         if (!imagePath.isNullOrEmpty()) {
             val bitmap = BitmapFactory.decodeFile(imagePath)
