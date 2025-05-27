@@ -5,6 +5,7 @@ data class Box(
     val y1: Int,
     val x2: Int,
     val y2: Int,
-    val class_id: String
-
+    val class_id: String,
+    val confidence: Float,
+    val timeDetected: Float? = null
 )

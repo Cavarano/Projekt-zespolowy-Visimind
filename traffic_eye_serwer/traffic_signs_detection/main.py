@@ -27,6 +27,7 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
 
 # FastAPI app
 app = FastAPI(lifespan=lifespan)
+app.container = container
 
 app.include_router(road_sign_router, prefix="/roadsign")
 app.include_router(detection_router, prefix="/detection")

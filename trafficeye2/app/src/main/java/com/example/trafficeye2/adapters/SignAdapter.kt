@@ -36,7 +36,7 @@ class SignAdapter(private val signsWithBoxes: List<SignWithBoxes>) :
         holder.signName.text = sign.name
         holder.signDescription.text = sign.description
         holder.signBoxes.text = boxes.joinToString("\n") { box ->
-            "x1: ${box.x1}, y1: ${box.y1}, x2: ${box.x2}, y2: ${box.y2}, class_id: ${box.class_id}"
+            "x1: ${box.x1}, y1: ${box.y1}, x2: ${box.x2}, y2: ${box.y2}, class_id: ${box.class_id}, confidence: ${box.confidence}"
         }
 
         Glide.with(holder.itemView)

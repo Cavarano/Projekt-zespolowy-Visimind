@@ -5,5 +5,4 @@ data class RoadSign(
     val name: String,
     val description: String,
     val photo_url: String
-
 )

@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken
 import com.example.trafficeye2.adapters.SignAdapter
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
+import android.util.Log
 import com.example.trafficeye2.models.Box
 import com.example.trafficeye2.models.SignWithBoxes
 import java.net.URL
@@ -32,6 +33,8 @@ class UploadFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_upload, container, false)
+
+        Log.e("UploadFragment", "${arguments}")
 
         val signsJson = arguments?.getString("signs") ?: "[]"
         val gson = Gson()
@@ -61,7 +64,7 @@ class UploadFragment : Fragment() {
             val bitmap = BitmapFactory.decodeFile(imagePath)
             imageView.setImageBitmap(bitmap)
         } else {
-            val imageUrl = arguments?.getString("image_url") ?: ""
+            val imageUrl = arguments?.getString("file_url") ?: ""
             if (imageUrl.isNotEmpty()) {
                 Thread {
                     try {

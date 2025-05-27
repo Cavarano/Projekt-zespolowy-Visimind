@@ -285,7 +285,7 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             val totalBoxes = jsonObject.getInt("total_boxes")
-                            val imageUrl = jsonObject.getString("image_url")
+                            val fileUrl = jsonObject.getString("file_url")
                             val boxesArray = jsonObject.getJSONArray("boxes")
                             val boxesList = mutableListOf<Box>()
                             for (i in 0 until boxesArray.length()) {
@@ -295,8 +295,9 @@ class MainActivity : AppCompatActivity() {
                                     y1 = boxObject.getInt("y1"),
                                     x2 = boxObject.getInt("x2"),
                                     y2 = boxObject.getInt("y2"),
-                                    class_id = boxObject.getString("class_id")
-
+                                    class_id = boxObject.getString("class_id"),
+                                    confidence = boxObject.getDouble("confidence").toFloat(),
+                                    timeDetected = if (boxObject.isNull("timeDetected")) null else boxObject.getDouble("timeDetected").toFloat()
                                 )
                                 boxesList.add(box)
                             }
@@ -311,7 +312,7 @@ class MainActivity : AppCompatActivity() {
                             val bundle = Bundle()
                             bundle.putString("signs", signsJson)
                             bundle.putInt("total_boxes", totalBoxes)
-                            bundle.putString("image_url", imageUrl)
+                            bundle.putString("file_url", fileUrl)
                             bundle.putString("uploaded_image", savedImagePath)
                             bundle.putString("boxes", boxesJson)
 

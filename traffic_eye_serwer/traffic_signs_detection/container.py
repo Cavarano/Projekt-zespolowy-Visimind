@@ -6,6 +6,7 @@ from dependency_injector.providers import Factory, Singleton
 from infrastructure.repositories.roadsigndb import RoadSignRepository
 from infrastructure.services.roadsign import RoadSignService
 from infrastructure.services.detection import DetectionService
+from infrastructure.services.video_detection import VideoDetectionService
 
 
 class Container(DeclarativeContainer):
@@ -20,4 +21,9 @@ class Container(DeclarativeContainer):
     detection_service = Factory(
         DetectionService,
         repository=road_sign_repository,
+    )
+
+    video_detection_service = Factory(
+        VideoDetectionService,
+        repository=road_sign_repository
     )
