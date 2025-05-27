@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2149C1"
+    android:background="@drawable/gradient_list"
     android:gravity="center_horizontal">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -39,28 +39,14 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" />
-
         <!-- Pełny opis (widoczny po rozwinięciu) -->
-        <TextView
-            android:id="@+id/fullDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="A"
-            android:textColor="#616161"
-            android:textSize="14sp"
-            android:visibility="gone" />
-
 
         <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/title"
             android:id="@+id/signsRecyclerView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:visibility="visible" />
     </androidx.cardview.widget.CardView>
 
     <!-- Przyciski -->
@@ -70,9 +56,9 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="@color/white"
         android:text="Return"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -1,7 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Dark Theme -->
     <style name="Base.Theme.Trafficeye2" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/blue</item> <!-- night version = #0B1C4E -->
+        <item name="colorSecondary">@color/dark_blue</item> <!-- night version = #11308A -->
+        <item name="android:colorBackground">@color/white</item> <!-- night version = #0A1D42 -->
+        <item name="android:textColorPrimary">@color/black</item> <!-- night version = #C2C8CA -->
+        <item name="android:navigationBarColor">@color/blue</item>
+        <item name="android:statusBarColor">@color/dark_blue</item>
     </style>
 </resources>

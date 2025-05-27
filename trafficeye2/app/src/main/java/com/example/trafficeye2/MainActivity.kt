@@ -12,6 +12,7 @@ import android.animation.ObjectAnimator
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.util.Log
 import android.view.animation.DecelerateInterpolator
@@ -44,12 +45,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cameraOnButton: Button
     private lateinit var titleText: TextView
     private lateinit var fragmentContainer: View
+    private lateinit var rootLayout: View
+    private lateinit var animationDrawable: AnimationDrawable
     private val PICK_IMAGE_REQUEST = 1
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        rootLayout = findViewById(R.id.rootLayout)
+        animationDrawable = rootLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2000)
+        animationDrawable.setExitFadeDuration(5000)
+        animationDrawable.start()
 
         imageButton   = findViewById(R.id.imageButton)
         imageViewIcon   = findViewById(R.id.imageViewIcon)

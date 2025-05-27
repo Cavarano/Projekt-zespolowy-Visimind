@@ -5,9 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4375ed3c-55b6-411b-93af-e7f2fe9825d7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/drawable-night/background1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/drawable-night/background2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/drawable-night/background3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/drawable/background1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/drawable/background2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/drawable/background3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/drawable/gradient_list.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values-night/colors.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/UploadFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/UploadFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/adapters/SignAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/adapters/SignAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_camera.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_camera.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_upload.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_upload.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/item_sign.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/item_sign.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values-night/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,22 +41,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Fixing__UI&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/169251/Projekt-zespolowy-Visimind/traffic_eye_serwer&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/169251/Projekt-zespolowy-Visimind/traffic_eye_serwer",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "terminal",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -64,6 +80,7 @@
       <workItem from="1747840647954" duration="1495000" />
       <workItem from="1748200163270" duration="81000" />
       <workItem from="1748200281144" duration="3380000" />
+      <workItem from="1748378831267" duration="2627000" />
     </task>
     <servers />
   </component>
