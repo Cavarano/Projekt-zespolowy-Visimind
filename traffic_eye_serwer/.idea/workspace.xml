@@ -5,29 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4375ed3c-55b6-411b-93af-e7f2fe9825d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/ui/custom/ParticleView.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/activity_particle_view.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/assets/labels.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/Detector.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/OverlayView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/traffic_eye_serwer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/traffic_eye_serwer.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../trafficeye2/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/SettingsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/SettingsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/anim/slide_in_down.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/anim/slide_in_down.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/anim/slide_in_up.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/anim/slide_in_up.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/anim/slide_out_down.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/anim/slide_out_down.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/anim/slide_out_up.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/anim/slide_out_up.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/drawable/background2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/drawable/background2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/CameraFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/java/com/example/trafficeye2/CameraFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_camera.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_camera.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_upload.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/fragment_upload.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/item_sign.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/layout/item_sign.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values-night/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values-night/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values-night/themes.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trafficeye2/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../trafficeye2/gradle/libs.versions.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +40,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/169251/Projekt-zespolowy-Visimind/traffic_eye_serwer&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/krusz/Documents/GitHub/Projekt-zespolowy-Visimind/traffic_eye_serwer&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -64,8 +53,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.25659.43" />
-        <option value="bundled-python-sdk-181015f7ab06-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.25659.43" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-PY-243.24978.54" />
+        <option value="bundled-python-sdk-91e3b7efe1d4-466328ff949b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.24978.54" />
       </set>
     </attachedChunks>
   </component>
@@ -86,6 +75,9 @@
       <workItem from="1748200281144" duration="3380000" />
       <workItem from="1748378831267" duration="2627000" />
       <workItem from="1748454568668" duration="7832000" />
+      <workItem from="1748509589913" duration="1443000" />
+      <workItem from="1748522759106" duration="140000" />
+      <workItem from="1748534126127" duration="18000" />
     </task>
     <servers />
   </component>

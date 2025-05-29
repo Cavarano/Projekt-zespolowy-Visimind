@@ -10,4 +10,7 @@
 
     <color name="md_theme_surfaceContainerHigh">#E3E6EB</color>
     <color name="md_theme_outline">#71787E</color>
+    <color name="bounding_box_color">#FF9800</color>
 </resources>
+
+
