@@ -19,9 +19,9 @@ import java.util.concurrent.Executors
 
 class CameraFragment : Fragment(), Detector.DetectorListener {
 
-    // Widoki interfejsu użytkownika
     private lateinit var previewView: PreviewView
     private lateinit var overlayView: OverlayView
+
     private lateinit var signLabel: TextView
     private lateinit var signName: TextView
     private lateinit var signDescription: TextView
@@ -29,22 +29,21 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
     private lateinit var signImage: ImageView
     private lateinit var returnButton: View
 
-    // Inicjalizacja detektora i wątku kamery
     private lateinit var detector: Detector
     private lateinit var cameraExecutor: ExecutorService
 
-    // Tworzenie widoku fragmentu
+    private var isActive = false  // Flaga oznaczająca czy fragment jest aktywny
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_camera, container, false)
     }
 
-    // Konfiguracja widoków po utworzeniu
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isActive = true
 
-        // Pobranie referencji do komponentów UI
         previewView = view.findViewById(R.id.camera_preview)
         signLabel = view.findViewById(R.id.detectedSignText)
         signName = view.findViewById(R.id.signName)
@@ -53,13 +52,12 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         signImage = view.findViewById(R.id.signImage)
         returnButton = view.findViewById(R.id.returnButton)
 
-        // Dynamiczne dodanie warstwy z ramkami detekcji nad podgląd kamery
+        // Programowe dodanie OverlayView nad podgląd kamery
         val rootLayout = view as ConstraintLayout
         overlayView = OverlayView(requireContext(), null)
         overlayView.id = View.generateViewId()
         rootLayout.addView(overlayView, ConstraintLayout.LayoutParams(0, 0))
 
-        // Ustawienie OverlayView nad PreviewView w układzie ConstraintLayout
         val constraints = ConstraintSet()
         constraints.clone(rootLayout)
         constraints.connect(overlayView.id, ConstraintSet.TOP, R.id.camera_preview, ConstraintSet.TOP)
@@ -68,46 +66,43 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         constraints.connect(overlayView.id, ConstraintSet.END, R.id.camera_preview, ConstraintSet.END)
         constraints.applyTo(rootLayout)
 
-        // Obsługa powrotu do ekranu głównego przez metodę MainActivity
+        // Powrót do menu głównego
         returnButton.setOnClickListener {
             (activity as? MainActivity)?.returnToMainMenu()
         }
 
-        // Inicjalizacja detektora YOLOv8 i wątku analizującego obraz
         detector = Detector(requireContext(), this)
         cameraExecutor = Executors.newSingleThreadExecutor()
-
-        // Uruchomienie podglądu z kamery i analizatora
         startCamera()
     }
 
-    // Konfiguracja kamery i analizatora obrazu
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
 
-            // Konfiguracja podglądu
             val preview = Preview.Builder().build().also {
                 it.setSurfaceProvider(previewView.surfaceProvider)
             }
 
-            // Konfiguracja analizatora obrazu
             val imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .setTargetResolution(android.util.Size(640, 640)) // Dopasowanie do modelu
+                .setTargetResolution(android.util.Size(640, 640))
                 .build().also {
                     it.setAnalyzer(cameraExecutor) { image ->
+                        if (!isActive) {
+                            image.close()
+                            return@setAnalyzer
+                        }
+
                         val bitmap = image.toBitmap()
                         bitmap?.let { detector.detect(it) }
                         image.close()
                     }
                 }
 
-            // Ustawienie tylnej kamery
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-            // Połączenie komponentów z cyklem życia
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
@@ -119,22 +114,21 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    // Wywoływana, gdy brak wykrytych znaków
     override fun onEmptyDetect() {
-        requireActivity().runOnUiThread {
+        if (!isActive || !isAdded) return
+        activity?.runOnUiThread {
             signLabel.text = "Brak wykrycia"
             signName.text = ""
             signDescription.text = ""
             signBoxes.text = ""
             signImage.visibility = View.GONE
-            overlayView.setResults(emptyList()) // Usunięcie ramek
+            overlayView.setResults(emptyList())
         }
     }
 
-    // Wywoływana, gdy wykryto znaki — pokazanie najlepszego wyniku
     override fun onDetect(boundingBoxes: List<Box>, inferenceTime: Long) {
-        requireActivity().runOnUiThread {
-            // Filtracja ramek: zbyt małe i wychodzące poza kadr są pomijane
+        if (!isActive || !isAdded) return
+        activity?.runOnUiThread {
             val bestBox = boundingBoxes
                 .filter {
                     val area = (it.x2 - it.x1) * (it.y2 - it.y1)
@@ -142,11 +136,11 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
                 }
                 .maxByOrNull {
                     val area = (it.x2 - it.x1) * (it.y2 - it.y1)
-                    area * it.confidence // priorytet: duży + pewny
+                    area * it.confidence
                 }
 
             if (bestBox != null) {
-                overlayView.setResults(listOf(bestBox)) // Narysuj ramkę
+                overlayView.setResults(listOf(bestBox))
                 signLabel.text = bestBox.class_id
                 signName.text = bestBox.class_id
                 signDescription.text = "Wykryto z pewnością %.2f%%".format(bestBox.confidence * 100)
@@ -158,37 +152,36 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         }
     }
 
-    // Zatrzymanie wątku kamery przy zamykaniu fragmentu
     override fun onDestroyView() {
+        isActive = false
         super.onDestroyView()
         cameraExecutor.shutdown()
     }
 
-    // Konwersja ImageProxy (z kamery) do Bitmap dla TFLite
     @androidx.camera.core.ExperimentalGetImage
     private fun ImageProxy.toBitmap(): Bitmap? {
         val image = this.image ?: return null
 
-        // Bufory YUV
         val yBuffer = image.planes[0].buffer
         val uBuffer = image.planes[1].buffer
         val vBuffer = image.planes[2].buffer
 
-        // Złożenie do formatu NV21
         val ySize = yBuffer.remaining()
         val uSize = uBuffer.remaining()
         val vSize = vBuffer.remaining()
+
         val nv21 = ByteArray(ySize + uSize + vSize)
         yBuffer.get(nv21, 0, ySize)
         vBuffer.get(nv21, ySize, vSize)
         uBuffer.get(nv21, ySize + vSize, uSize)
 
-        // Konwersja NV21 → JPEG → Bitmap
         val yuvImage = android.graphics.YuvImage(
             nv21, android.graphics.ImageFormat.NV21, this.width, this.height, null
         )
         val out = java.io.ByteArrayOutputStream()
-        yuvImage.compressToJpeg(android.graphics.Rect(0, 0, this.width, this.height), 100, out)
+        yuvImage.compressToJpeg(
+            android.graphics.Rect(0, 0, this.width, this.height), 100, out
+        )
         val yuv = out.toByteArray()
         return android.graphics.BitmapFactory.decodeByteArray(yuv, 0, yuv.size)
     }
