@@ -32,6 +32,7 @@ import org.json.JSONObject
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 import com.example.trafficeye2.models.RoadSign
+import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import java.io.File
 import java.io.FileOutputStream
@@ -40,9 +41,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var imageButton: ImageButton
     private lateinit var imageViewIcon: ImageView
-    private lateinit var getStartedButton: Button
-    private lateinit var uploadButton: Button
-    private lateinit var cameraOnButton: Button
+    private lateinit var getStartedButton: MaterialButton
+    private lateinit var uploadButton: MaterialButton
+    private lateinit var cameraOnButton: MaterialButton
     private lateinit var titleText: TextView
     private lateinit var fragmentContainer: View
     private lateinit var rootLayout: View
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         rootLayout = findViewById(R.id.rootLayout)
         animationDrawable = rootLayout.background as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(2000)
+        animationDrawable.setEnterFadeDuration(100)
         animationDrawable.setExitFadeDuration(5000)
         animationDrawable.start()
 
@@ -135,41 +136,43 @@ class MainActivity : AppCompatActivity() {
     private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
-            .commit()
+            .commitNow()
 
-        // Ensure fragmentContainer is visible before animation
+        // Manually animate in
+        fragmentContainer.translationY = fragmentContainer.height.toFloat()
         fragmentContainer.visibility = View.VISIBLE
 
-        // Start off-screen at bottom
-        fragmentContainer.post {
-            fragmentContainer.translationY = fragmentContainer.height.toFloat()
-            fragmentContainer.animate()
-                .translationY(0f)
-                .setDuration(300)
-                .start()
-        }
-
+        fragmentContainer.animate()
+            .translationY(0f)
+            .setDuration(300)
+            .start()
 
         uploadButton.visibility = View.GONE
         cameraOnButton.visibility = View.GONE
         imageButton.visibility = View.GONE
 
+
     }
+
 
 
     fun returnToMainMenu() {
         hideLoadingIndicator()
+
         fragmentContainer.animate()
-            .translationY(fragmentContainer.height.toFloat()) // Slide down out
+            .translationY(fragmentContainer.height.toFloat())
             .setDuration(300)
             .withEndAction {
                 fragmentContainer.visibility = View.GONE
+                supportFragmentManager.popBackStack() // Clean up fragment
                 uploadButton.visibility = View.VISIBLE
                 cameraOnButton.visibility = View.VISIBLE
                 imageButton.visibility = View.VISIBLE
             }
             .start()
+
     }
+
 
     private fun animateXEntrance(view: View) {
         view.translationY = -1000f

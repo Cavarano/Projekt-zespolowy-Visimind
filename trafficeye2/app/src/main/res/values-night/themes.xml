@@ -1,11 +1,18 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Dark Theme -->
-    <style name="Base.Theme.Trafficeye2" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/blue</item> <!-- night version = #0B1C4E -->
-        <item name="colorSecondary">@color/dark_blue</item> <!-- night version = #11308A -->
-        <item name="android:colorBackground">@color/white</item> <!-- night version = #0A1D42 -->
-        <item name="android:textColorPrimary">@color/black</item> <!-- night version = #C2C8CA -->
-        <item name="android:navigationBarColor">@color/blue</item>
-        <item name="android:statusBarColor">@color/dark_blue</item>
+<resources>
+    <style name="AppTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/md_theme_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_onPrimaryContainer</item>
+
+        <!-- Surfaces -->
+        <item name="colorSurface">@color/md_theme_surface</item>
+        <item name="colorOnSurface">@color/md_theme_onSurface</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_onSurfaceVariant</item>
+
+        <!-- Outline (used in cards, strokes) -->
+        <item name="colorOutline">@color/md_theme_outline</item>
     </style>
 </resources>

@@ -13,11 +13,13 @@ class SettingsFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
         returnButton = view.findViewById(R.id.returnButton)
 
