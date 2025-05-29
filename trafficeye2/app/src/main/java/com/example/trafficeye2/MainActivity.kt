@@ -19,6 +19,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.trafficeye2.models.Box
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -53,6 +54,9 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val savedMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(savedMode)
         setContentView(R.layout.activity_main)
 
         rootLayout = findViewById(R.id.rootLayout)
