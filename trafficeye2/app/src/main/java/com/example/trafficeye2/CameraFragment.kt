@@ -19,6 +19,7 @@ import java.util.concurrent.Executors
 
 class CameraFragment : Fragment(), Detector.DetectorListener {
 
+    // Widoki kamery i interfejsu
     private lateinit var previewView: PreviewView
     private lateinit var overlayView: OverlayView
 
@@ -29,10 +30,12 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
     private lateinit var signImage: ImageView
     private lateinit var returnButton: View
 
+    // Detektor TFLite i executor wątku
     private lateinit var detector: Detector
     private lateinit var cameraExecutor: ExecutorService
 
-    private var isActive = false  // Flaga oznaczająca czy fragment jest aktywny
+    // Czy fragment aktywny (do kontroli cyklu życia)
+    private var isActive = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -44,6 +47,7 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         super.onViewCreated(view, savedInstanceState)
         isActive = true
 
+        // Inicjalizacja widoków
         previewView = view.findViewById(R.id.camera_preview)
         signLabel = view.findViewById(R.id.detectedSignText)
         signName = view.findViewById(R.id.signName)
@@ -52,7 +56,7 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         signImage = view.findViewById(R.id.signImage)
         returnButton = view.findViewById(R.id.returnButton)
 
-        // Programowe dodanie OverlayView nad podgląd kamery
+        // Dodanie OverlayView programowo jako warstwy nad kamerą
         val rootLayout = view as ConstraintLayout
         overlayView = OverlayView(requireContext(), null)
         overlayView.id = View.generateViewId()
@@ -71,6 +75,7 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
             (activity as? MainActivity)?.returnToMainMenu()
         }
 
+        // Inicjalizacja detektora i uruchomienie kamery
         detector = Detector(requireContext(), this)
         cameraExecutor = Executors.newSingleThreadExecutor()
         startCamera()
@@ -81,10 +86,12 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
 
+            // Podgląd kamery
             val preview = Preview.Builder().build().also {
                 it.setSurfaceProvider(previewView.surfaceProvider)
             }
 
+            // Analizator obrazu
             val imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .setTargetResolution(android.util.Size(640, 640))
@@ -95,6 +102,7 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
                             return@setAnalyzer
                         }
 
+                        // Konwersja obrazu do bitmapy i wykrycie
                         val bitmap = image.toBitmap()
                         bitmap?.let { detector.detect(it) }
                         image.close()
@@ -114,6 +122,7 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
+    // Gdy nie wykryto żadnego znaku
     override fun onEmptyDetect() {
         if (!isActive || !isAdded) return
         activity?.runOnUiThread {
@@ -126,6 +135,7 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         }
     }
 
+    // Gdy wykryto przynajmniej jeden znak
     override fun onDetect(boundingBoxes: List<Box>, inferenceTime: Long) {
         if (!isActive || !isAdded) return
         activity?.runOnUiThread {
@@ -152,12 +162,14 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
         }
     }
 
+    // Sprzątanie gdy fragment niszczony
     override fun onDestroyView() {
         isActive = false
         super.onDestroyView()
         cameraExecutor.shutdown()
     }
 
+    // Konwersja z ImageProxy do Bitmapy (YUV → JPEG → Bitmap)
     @androidx.camera.core.ExperimentalGetImage
     private fun ImageProxy.toBitmap(): Bitmap? {
         val image = this.image ?: return null
