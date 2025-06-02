@@ -35,15 +35,11 @@ class Detector(
         .build()
 
     init {
-        // Inicjalizacja interpretera TFLite z opcjonalnym wsparciem GPU
+        // Inicjalizacja interpretera TFLite z CPU
         val options = Interpreter.Options().apply {
-            val compatList = CompatibilityList()
-            if (compatList.isDelegateSupportedOnThisDevice) {
-                addDelegate(GpuDelegate(compatList.bestOptionsForThisDevice))
-            } else {
-                setNumThreads(4)
-            }
+            setNumThreads(4) // lub mniej
         }
+
 
         interpreter = Interpreter(FileUtil.loadMappedFile(context, modelPath), options)
         labels = FileUtil.loadLabels(context, labelPath)
