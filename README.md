@@ -97,4 +97,75 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 >After all these steps, you will most likely be in the same local network as the Phone and the Device running the local server
 ></details>
 
+# Research & ML
+During the project, a lot of effort was spent on data pre-processing. 
+We received the data in image format without labeling, so we had to determine 
+which signs our model would recognize and which would not, and manually label 
+all the photos. We used such technology as labelme. The company provided us 
+with 5244 photos, but after labeling and discarding the photos with no road 
+signs at all or hardly visible, we were left with 2600+- photos. Our team 
+immediately realized that for such a large project, we still needed to expand 
+the dataset, which we did. After two additional dataset expansions, 6729 photos
+were provided for our model, of which 75% of the data was used for training,
+15% for validation, and 10% for testing.  This was very important for 
+the project, as it was the first time we worked with model training and 
+wanted to do the best we could and at the same time understand how the 
+training works.
 
+## Achievements
+
+|               Training Metrics                | Labels Histogram |
+|:---------------------------------------------:|:----------------:|
+| ![results](documentation/uploads/results.png) | ![results](documentation/uploads/labels.jpg) |
+
+### Training and Validation Metrics
+This multi-plot figure shows the training and validation progress over epochs:
+- Box loss / Class loss / DFL loss: All loss functions decrease — indicating learning progress.
+- Precision / Recall / mAP@50 / mAP@50-95: All metrics increase — suggesting the model generalizes well to validation data.
+
+### Dataset Label Distribution and Placement
+This figure provides a detailed analysis of the annotated training dataset:
+
+- Top-left: Histogram of instances per class. Useful for detecting class imbalance.
+- Top-right: Bounding box anchor visualization — shows how anchor boxes are sized and placed.
+- Bottom-left: Object center heatmap (x/y coordinates). This highlights where in the image objects usually appear.
+- Bottom-right: Width/height distribution — shows that most objects are relatively small.
+
+
+|                       Correlogram                        | Confusion Matrix |
+|:--------------------------------------------------------:|:----------------:|
+| ![results](documentation/uploads/labels_correlogram.jpg) | ![results](documentation/uploads/confusion_matrix_normalized.png) |
+
+### Class Co-occurrence (Correlogram)
+This correlogram represents how frequently different traffic sign classes appear together in the same image.
+- Each square represents a pair of classes.
+- Brighter colors mean higher co-occurrence.
+
+### Confusion Matrix (Normalized)
+
+This matrix illustrates how often predictions match the actual classes:
+
+- Diagonal cells represent correct predictions.
+- Off-diagonal cells show confusion between classes.
+
+
+
+
+# Traffic Eye Team
+
+## GUI & App:
+
+- [Maciej Kała](https://github.com/Cavarano)
+- [Alina Upirowa](https://github.com/alinaupyrova)
+
+
+## Backend
+
+### Connecting the model to the camera in real time, Tester
+- [Mateusz Kruszewsi](https://github.com/kru3zec)
+
+### Database, FastAPI server
+- [Eryk Żabiński]()
+
+## ML, fixing errors, combining logic
+- [Ruslan Zhukotynskyi](https://github.com/ruslanzhuk)
