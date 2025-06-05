@@ -2,13 +2,13 @@ from ultralytics import YOLO
 import os
 
 # Завантаження моделі
-# model = YOLO("../yolo_model/best.pt")
+# model = YOLO("../yolo_model/best.pt") - stary
 _model = None
 
 def get_model():
     global _model
     if _model is None:
-        model_path = "yolo_model/best.pt"
+        model_path = "yolo_model/sdv4.pt"
         print("Current working directory:", os.getcwd())
         print("Trying to load model from:", os.path.abspath(model_path))
         _model = YOLO(model_path)
