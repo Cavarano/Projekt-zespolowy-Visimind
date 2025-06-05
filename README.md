@@ -165,7 +165,7 @@ This matrix illustrates how often predictions match the actual classes:
 - [Mateusz Kruszewsi](https://github.com/kru3zec)
 
 ### Database, FastAPI server
-- [Eryk Żabiński]()
+- [Eryk Żabiński](https://github.com/erykz415)
 
 ## ML, fixing errors, combining logic
 - [Ruslan Zhukotynskyi](https://github.com/ruslanzhuk)
