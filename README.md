@@ -262,7 +262,9 @@ This combination of visual detection and educational context helps users quickly
 
 </details>
 
+# License
 
+This project is licensed under the [MIT License](documentation/LICENSE).
 
 # Traffic Eye Team
 
