@@ -112,6 +112,17 @@ the project, as it was the first time we worked with model training and
 wanted to do the best we could and at the same time understand how the 
 training works.
 
+<details>
+<summary>🔍 Click for see more information about ML</summary>
+
+## Expand dataset
+
+<p align="left">
+  <img src="documentation/uploads/Mapillary_logo.png" width="300"/>
+</p>
+
+The Mappilary program was used to expand the dataset. I downloaded photos from it using a script and then labeled them.
+
 ## Achievements
 
 |               Training Metrics                | Labels Histogram |
@@ -148,6 +159,108 @@ This matrix illustrates how often predictions match the actual classes:
 - Diagonal cells represent correct predictions.
 - Off-diagonal cells show confusion between classes.
 
+### Training Batches Visualization
+
+|                    Correlogram                     |                    Confusion Matrix                    |
+|:--------------------------------------------------:|:------------------------------------------------------:|
+| ![results](documentation/uploads/train_batch2.jpg) | ![results](documentation/uploads/train_batch18961.jpg) |
+
+These visualizations represent two sample training batches used during model training. The images are shown with their corresponding bounding boxes and class labels.
+
+These visuals are useful for verifying that:
+- bounding boxes are correctly positioned,
+- labels match the objects,
+- and the dataset covers diverse conditions.
+
+### Validation Predictions Visualization
+
+|                      Correlogram                      |                   Confusion Matrix                    |
+|:-----------------------------------------------------:|:-----------------------------------------------------:|
+| ![results](documentation/uploads/val_batch0_pred.jpg) | ![results](documentation/uploads/val_batch1_pred.jpg) |
+
+
+These images show the predictions made by the YOLOv8 model on a sample of the validation set.
+
+Each predicted object is displayed with:
+- a bounding box,
+- a class label,
+- and a confidence score.
+
+## 📊 Model Comparison and Selection
+During the development process, we trained and evaluated seven (more but no sens) different YOLOv8 models using various configurations, datasets, and training parameters. Below is a comparison of their performance metrics:
+
+| Model                      | Dataset Extension         | Epochs | Precision ↑ | Recall ↑    | mAP50 ↑     | mAP50-95 ↑  | Box Loss ↓  | Cls Loss ↓  | DFL Loss ↓ |
+|----------------------------|---------------------------| ------ |-------------|-------------|-------------| ----------- | ----------- | ----------- | ---------- |
+| YOLOv8s.pt (FIRST MODEL)   | Visimind dataset 2600+-   | 50     | 0.86613     | 0.80068     | 0.86381     | 0.66727     | 0.69533     | 0.39464     | 0.84124    |
+| YOLOv8n.pt                 | +2500 images              | 70     | 0.926       | 0.869       | 0.928       | 0.709       | 0.8557      | 0.54        | 0.897      |
+| YOLOv8m.pt                 | +2500 images              | 50     | **0.948**   | 0.903       | 0.947       | 0.757       | 0.6974      | 0.3717      | 0.8561     |
+| YOLOv8s.pt (default train) | +2500 images              | 70     | 0.93658     | **0.92352** | **0.95315** | **0.77851** | 0.62419     | 0.33248     | 0.83531    |
+| YOLOv8s (aug+params)       | +2500 images (augmented)  | 70     | **0.94127** | 0.91069     | 0.95098     | 0.76688     | 0.75699     | 0.3895      | 0.86131    |
+| YOLOv8m Last               | +2500 + 1046 images (aug) | 70     | 0.92624     | 0.91176     | 0.93892     | 0.76647     | **0.47121** | **0.27451** | **0.7281** |
+| **YOLOv8s Final**          | +2500 + 1046 images (aug) | 70     | 0.9224      | 0.8985      | 0.93589     | 0.76237     | 0.72337     | 0.39293     | 0.85337    |
+
+### Model Selection Justification
+
+### What Do These Numbers Mean? 🤔
+- **Precision**: How often the model is right when it says, “That’s an A-1 sign!” (Higher = fewer false positives.)
+- **Recall**: How many signs the model spots out of all the signs in an image. (Higher = fewer missed signs.)
+- **mAP50 & mAP50-95**: Mean Average Precision, a “overall score” for how well the model detects signs across different confidence thresholds.
+- **Losses**: How much the model “messes up” during training. (Lower = better learning.)
+
+After comparing all metrics, we selected YOLOv8s Final as the best trade-off between speed, accuracy, and model size, which is important for deploying on mobile devices.
+
+### Why YOLOv8s Final? 🏆
+After battling buggy bounding boxes and sipping way too much coffee, we crowned **YOLOv8s Final** as our champ. Here’s why it’s the MVP:
+- **Solid Accuracy**: mAP50-95 of 0.76237 means it nails most signs, even in tough conditions.
+- **Lightweight**: Its float16 format is compact, perfect for mobile devices and servers.
+- **Versatile**: Trained on over 5000 augmented images, it handles rain, dusk, and weird angles like a pro.
+- **Speed (almost there)**: Designed for real-time detection (~15 FPS planned), though we’re still tweaking mobile performance.
+
+Sure, YOLOv8m models scored slightly higher in some metrics, but they’re like a gas-guzzling supercar—great for the track, not for daily drives. YOLOv8s Final is our “hybrid SUV”: efficient, reliable, and ready for the road! 😄
+
+### How It Works (or Will Work!) 🚦
+1. **Mobile App**: Upload a photo or use the camera, and the model draws boxes with labels (e.g., `A-1: 0.92`). *Note: Real-time detection is still in progress—stay tuned!*
+2. **FastAPI Server**: Send an image, and the server returns detections in ~5 seconds. We’re working to speed this up for smoother analysis.
+3. **Example**: Check out our detection on `test4.png`:
+<p align="left">
+   <img src="documentation/uploads/test4.png" alt="Detected Traffic Signs" width="240"/>
+</p>
+
+</details>
+
+# 📱 Mobile App Preview
+
+The TrafficEye mobile application provides an intuitive and minimal interface that allows users to either activate the camera for real-time detection or upload a static image for analysis.
+
+<details>
+<summary>🔍 UI</summary>
+
+### 🔵 Main Screen
+
+<p align="left">
+   <img src="documentation/uploads/screen1.png" alt="Detected Traffic Signs" width="200"/>
+</p>
+
+The home screen includes two main options:
+- **Camera on** – launches the real-time detection mode using the built-in TFLite model.
+- **Upload** – allows users to upload an image from their device for backend analysis via the FastAPI server.
+
+A short slogan at the bottom reinforces the app's mission:  
+`DriveSafe helps drivers detect and understand road signs instantly using AI-powered recognition.`
+
+### 🟦 Detection Result & Explanation
+
+<p align="left">
+   <img src="documentation/uploads/screen2.png" alt="Detected Traffic Signs" width="240"/>
+</p>
+
+After analyzing an image, the application displays:
+- Detected road signs with bounding boxes and confidence levels.
+- A list of identified signs with Polish descriptions explaining their meaning and purpose.
+
+This combination of visual detection and educational context helps users quickly understand and learn traffic signs, improving both awareness and safety.
+
+</details>
 
 
 
