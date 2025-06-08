@@ -13,6 +13,8 @@ cameraLifecycle = "1.4.2"
 cameraView = "1.4.2"
 litertSupportApi = "1.3.0"
 litertGpu = "1.3.0"
+litertMetadata = "1.3.0"
+litertGpuApi = "1.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -27,6 +29,8 @@ androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycl
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
 litert-support-api = { group = "com.google.ai.edge.litert", name = "litert-support-api", version.ref = "litertSupportApi" }
 litert-gpu = { group = "com.google.ai.edge.litert", name = "litert-gpu", version.ref = "litertGpu" }
+litert-metadata = { group = "com.google.ai.edge.litert", name = "litert-metadata", version.ref = "litertMetadata" }
+litert-gpu-api = { group = "com.google.ai.edge.litert", name = "litert-gpu-api", version.ref = "litertGpuApi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

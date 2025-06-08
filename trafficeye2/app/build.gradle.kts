@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
+    implementation(libs.litert.metadata)
+    implementation(libs.litert.gpu.api)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

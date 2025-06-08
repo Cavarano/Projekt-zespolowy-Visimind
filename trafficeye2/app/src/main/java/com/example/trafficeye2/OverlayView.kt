@@ -6,29 +6,25 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.example.trafficeye2.models.Box
+import com.example.trafficeye2.models.BoundingBox
 
-// Widok odpowiedzialny za rysowanie ramek wykrytych obiektów oraz podpisów
+
 class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    // Lista aktualnych wyników detekcji
-    private var results = listOf<Box>()
+    private var results = listOf<BoundingBox>()
 
-    // Narzędzia graficzne do rysowania: ramka, tło tekstu, tekst
     private var boxPaint = Paint()
     private var textBackgroundPaint = Paint()
     private var textPaint = Paint()
-
-    // Pomocniczy prostokąt do obliczania wymiarów tekstu
     private var bounds = Rect()
 
     init {
-        initPaints() // Inicjalizacja farb
+        initPaints()
     }
 
-    // Czyści wykrycia i resetuje farby
     fun clear() {
         results = listOf()
         textPaint.reset()
@@ -38,7 +34,6 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         initPaints()
     }
 
-    // Ustawia parametry farb: kolory, style, rozmiary
     private fun initPaints() {
         textBackgroundPaint.color = Color.BLACK
         textBackgroundPaint.style = Paint.Style.FILL
@@ -48,57 +43,54 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         textPaint.style = Paint.Style.FILL
         textPaint.textSize = 50f
 
-        // Kolor ramki wczytywany z zasobów kolorów (np. res/values/colors.xml)
         boxPaint.color = ContextCompat.getColor(context!!, R.color.bounding_box_color)
         boxPaint.strokeWidth = 8F
         boxPaint.style = Paint.Style.STROKE
     }
 
-    // Nadpisuje metodę rysowania widoku
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
-        results.forEach {
-            // Przeskalowanie współrzędnych wykrycia (model działa w przestrzeni 640x640)
-            val left = it.x1.toFloat() / 640 * width
-            val top = it.y1.toFloat() / 640 * height
-            val right = it.x2.toFloat() / 640 * width
-            val bottom = it.y2.toFloat() / 640 * height
+        Log.d("OverlayView", "draw() called with ${results.size} boxes")
 
-            // Rysowanie prostokąta ramki
+        results.forEach {
+            val left = (it.x1 * width).coerceIn(0f, width.toFloat())
+            val top = (it.y1 * height).coerceIn(0f, height.toFloat())
+            val right = (it.x2 * width).coerceIn(0f, width.toFloat())
+            val bottom = (it.y2 * height).coerceIn(0f, height.toFloat())
+
             canvas.drawRect(left, top, right, bottom, boxPaint)
 
-            // Tworzenie etykiety z klasą i procentem pewności
-            val confidencePercent = String.format("%.2f", it.confidence * 100)
-            val drawableText = "${it.class_id} (${confidencePercent}%)"
+            val label = "${it.clsName} (${String.format("%.1f", it.cnf * 100)}%)"
 
-            // Obliczenie wymiarów tekstu
-            textBackgroundPaint.getTextBounds(drawableText, 0, drawableText.length, bounds)
+            textBackgroundPaint.getTextBounds(label, 0, label.length, bounds)
             val textWidth = bounds.width()
             val textHeight = bounds.height()
 
-            // Rysowanie tła pod tekstem
+            val textX = (left + right) / 2f - textWidth / 2f
+            val textY = (top - 8f).coerceAtLeast(textHeight.toFloat() + 4f)
+
             canvas.drawRect(
-                left,
-                top,
-                left + textWidth + BOUNDING_RECT_TEXT_PADDING,
-                top + textHeight + BOUNDING_RECT_TEXT_PADDING,
+                textX - 6,
+                textY - textHeight - 6,
+                textX + textWidth + 6,
+                textY + 6,
                 textBackgroundPaint
             )
 
-            // Rysowanie tekstu na górze ramki
-            canvas.drawText(drawableText, left, top + bounds.height(), textPaint)
+            canvas.drawText(label, textX, textY, textPaint)
+
+            Log.d("OverlayView", "Drawing label '$label' at x=${textX.toInt()} y=${textY.toInt()}")
         }
     }
 
-    // Ustawia nową listę wykryć i odświeża widok
-    fun setResults(boundingBoxes: List<Box>) {
+    fun setResults(boundingBoxes: List<BoundingBox>) {
+        Log.d("OverlayView", "setResults() called with ${boundingBoxes.size} results")
         results = boundingBoxes
         invalidate()
     }
 
     companion object {
-        // Odstęp w pikselach między tekstem a tłem
         private const val BOUNDING_RECT_TEXT_PADDING = 8
     }
 }
