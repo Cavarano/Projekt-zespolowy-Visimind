@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.os.Bundle
-import android.provider.SyncStateContract
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -23,9 +22,6 @@ import com.example.trafficeye2.Constants
 import com.surendramaran.yolov8tflite.Detector
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import com.example.trafficeye2.Constants.MODEL_PATH
-import com.example.trafficeye2.Constants.LABELS_PATH
-
 
 class CameraFragment : Fragment(), Detector.DetectorListener {
 
@@ -173,13 +169,22 @@ class CameraFragment : Fragment(), Detector.DetectorListener {
             overlayView.setResults(boundingBoxes)
             inferenceTime.text = "${inferenceTimeMs}ms"
 
+            // Wyświetl nazwy wszystkich 3 wykrytych znaków
+            val signNames = boundingBoxes.take(3).joinToString(", ") { it.clsName }
+            detectedSignText.text = if (signNames.isNotEmpty()) signNames else "Brak detekcji"
+
+            // Wyświetl szczegóły tylko dla pierwszego znaku (opcjonalnie można rozszerzyć)
             val top = boundingBoxes.firstOrNull()
             if (top != null) {
-                detectedSignText.text = top.clsName
                 signName.text = top.clsName
                 signDescription.text = "Wykryto z %.1f%%".format(top.cnf * 100)
                 signBoxes.text = "(%.2f, %.2f, %.2f, %.2f)".format(top.x1, top.y1, top.x2, top.y2)
                 signImage.visibility = View.VISIBLE
+            } else {
+                signName.text = ""
+                signDescription.text = ""
+                signBoxes.text = ""
+                signImage.visibility = View.GONE
             }
         }
     }
