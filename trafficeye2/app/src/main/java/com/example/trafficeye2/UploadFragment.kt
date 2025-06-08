@@ -2,13 +2,13 @@ package com.example.trafficeye2
 
 import android.annotation.SuppressLint
 import android.graphics.*
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import android.widget.*
-import android.util.TypedValue
-import androidx.cardview.widget.CardView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +17,9 @@ import com.example.trafficeye2.models.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.net.URL
+import android.graphics.BitmapFactory
+import androidx.exifinterface.media.ExifInterface // Zastąpiono android.media.ExifInterface
+import java.util.Locale // Dodano dla String.format
 
 class UploadFragment : Fragment() {
 
@@ -35,7 +38,7 @@ class UploadFragment : Fragment() {
         val boxes: List<Box> = gson.fromJson(boxesJson, object : TypeToken<List<Box>>() {}.type)
 
         val imageView = view.findViewById<ImageView>(R.id.imageView2)
-        val returnButton = view.findViewById<Button>(R.id.returnButton)
+        val returnButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.returnButton)
         val recyclerView = view.findViewById<RecyclerView>(R.id.signsRecyclerView)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -46,14 +49,22 @@ class UploadFragment : Fragment() {
 
         if (!imagePath.isNullOrEmpty()) {
             val bitmap = BitmapFactory.decodeFile(imagePath)
-
             if (bitmap != null && bitmap.width > 0 && bitmap.height > 0) {
                 try {
-                    val bitmapWithBoxes = drawBoxesOnBitmap(bitmap, boxes, signs)
+                    // Obsługa EXIF dla rotacji
+                    val exif = ExifInterface(imagePath)
+                    val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+                    val rotatedBitmap = when (orientation) {
+                        ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90f)
+                        ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180f)
+                        ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270f)
+                        else -> bitmap
+                    }
+                    val bitmapWithBoxes = drawBoxesOnBitmap(rotatedBitmap, boxes, signs)
                     imageView.setImageBitmap(bitmapWithBoxes)
                 } catch (e: Exception) {
                     Log.e("UploadFragment", "drawBoxesOnBitmap failed: ${e.message}")
-                    imageView.setImageBitmap(bitmap) // fallback bez rysowania
+                    imageView.setImageBitmap(bitmap) // fallback
                 }
             } else {
                 Log.e("UploadFragment", "Nieprawidłowy bitmap z pliku: $imagePath")
@@ -63,9 +74,21 @@ class UploadFragment : Fragment() {
             Thread {
                 try {
                     val input = URL(imageUrl).openStream()
-                    val drawable = Drawable.createFromStream(input, "src")
-                    activity?.runOnUiThread {
-                        imageView.setImageDrawable(drawable)
+                    val bitmap = BitmapFactory.decodeStream(input)
+                    if (bitmap != null) {
+                        // Pobranie EXIF z oryginalnego pliku (jeśli dostępny lokalnie)
+                        val exif = if (!imagePath.isNullOrEmpty()) ExifInterface(imagePath) else null
+                        val orientation = exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL) ?: ExifInterface.ORIENTATION_NORMAL
+                        val rotatedBitmap = when (orientation) {
+                            ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90f)
+                            ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180f)
+                            ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270f)
+                            else -> bitmap
+                        }
+                        activity?.runOnUiThread {
+                            val bitmapWithBoxes = drawBoxesOnBitmap(rotatedBitmap, boxes, signs)
+                            imageView.setImageBitmap(bitmapWithBoxes)
+                        }
                     }
                 } catch (e: Exception) {
                     Log.e("UploadFragment", "Błąd podczas pobierania obrazu: ${e.message}")
@@ -87,7 +110,11 @@ class UploadFragment : Fragment() {
         }
     }
 
-
+    private fun rotateBitmap(bitmap: Bitmap, degrees: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(degrees)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
 
     private fun drawBoxesOnBitmap(original: Bitmap, boxes: List<Box>, signs: List<RoadSign>): Bitmap {
         val mutableBitmap = original.copy(Bitmap.Config.ARGB_8888, true)
@@ -145,8 +172,9 @@ class UploadFragment : Fragment() {
                     isFakeBoldText = true
                 }
 
+                // Dostosowanie do class_id jako String
                 val signLabel = signs.find { it.id == box.class_id }?.id ?: box.class_id
-                val confidenceText = String.format("%.1f", box.confidence * 100) + "%"
+                val confidenceText = String.format(Locale.US, "%.1f", box.confidence * 100) + "%" // Dodano Locale.US
 
                 val centerY = (y1 + y2) / 2f
                 val textOffset = textPaint.textSize / 3
@@ -171,5 +199,4 @@ class UploadFragment : Fragment() {
 
         return mutableBitmap
     }
-
 }

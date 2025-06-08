@@ -255,9 +255,9 @@ class MainActivity : AppCompatActivity() {
                 .build()
 
             val request = Request.Builder()
-                .url("http://192.168.206.178:8000/detection/detect-signs/")
+                .url("http://192.168.246.178:8000/detection/detect-signs/")
+//                .url("http://192.168.206.178:8000/detection/detect-signs/")
 //                .url("http://10.0.2.2:8000/detection/detect-signs/")
-//                .url("http://ТВОЯ_АДРЕСА:8000/route_яка_приймає_фото")  // <- wstaw tutaj adres FastAPI
                 .post(requestBody)
                 .build()
 
