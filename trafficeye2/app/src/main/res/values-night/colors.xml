@@ -10,4 +10,8 @@
 
     <color name="md_theme_surfaceContainerHigh">#E3E6EB</color>
     <color name="md_theme_outline">#71787E</color>
+
+    <color name="material_dynamic_neutral90">#E0E0E0</color>
+    <color name="material_dynamic_neutral0">#000000</color>
+    <color name="material_dynamic_neutral40">#888888</color>
 </resources>

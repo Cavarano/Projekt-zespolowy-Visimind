@@ -255,7 +255,8 @@ class MainActivity : AppCompatActivity() {
                 .build()
 
             val request = Request.Builder()
-                .url("http://192.168.246.178:8000/detection/detect-signs/")
+                .url("http://192.168.226.178:8000/detection/detect-signs/")
+//                .url("http://192.168.246.178:8000/detection/detect-signs/")
 //                .url("http://192.168.206.178:8000/detection/detect-signs/")
 //                .url("http://10.0.2.2:8000/detection/detect-signs/")
                 .post(requestBody)
