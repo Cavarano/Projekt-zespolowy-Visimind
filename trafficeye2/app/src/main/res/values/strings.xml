@@ -1,3 +1,13 @@
+<!--<resources>-->
+<!--    <string name="app_name">Traffic Eye</string>-->
+<!--</resources>-->
 <resources>
-    <string name="app_name">Traffic Eye</string>
+    <string name="app_name">TrafficEye</string>
+
+    <!-- Dodane brakujące stringi -->
+    <string name="inference_time_default">Czas inferencji: -- ms</string>
+    <string name="content_description_captured_image">Zrzut ekranu kamery</string>
+    <string name="sign_description_default">Brak opisu</string>
+    <string name="content_description_sign_image">Obraz znaku drogowego</string>
+    <string name="return_button">Powrót</string>
 </resources>
